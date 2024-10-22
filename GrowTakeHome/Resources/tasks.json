@@ -1,0 +1,8 @@
+[ 
+	[3, ["happy", "sad", "content", "angry", "frustrated", "low energy", "excited"], "09-01-2024"],
+	[4, ["happy", "content", "angry", "frustrated", "excited"], "09-15-2024"],
+	[5, ["happy", "sad", "angry", "frustrated", "low energy", "excited"], "10-01-2024"],
+	[4, ["happy", "sad", "angry", "low energy", "excited"], "10-15-2024"],
+	[6, ["happy", "sad", "content", "angry", "frustrated", "excited"], "11-01-2024"],
+	[7, ["happy", "content", "angry", "frustrated", "excited"], "11-15-2024"],
+]
