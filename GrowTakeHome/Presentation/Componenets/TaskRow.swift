@@ -30,11 +30,11 @@ class TaskRowViewModel: ObservableObject, Identifiable {
     enum ViewStyle {
         case locked
         case active
-        case completed
+        case complete
     }
     
     @Published var style: ViewStyle
-    let displayText: String
+    @Published var displayText: String
     let displayTextColor: Color
     let icon: Image?
     let iconColor: Color?
@@ -55,7 +55,7 @@ class TaskRowViewModel: ObservableObject, Identifiable {
             self.icon = Image(systemName: "chevron.right")
             self.iconColor = .colorNeutralBlack
             self.backgroundColor = .colorNeutralGreen
-        case .completed:
+        case .complete:
             self.displayTextColor = .colorNeutralGray
             self.icon = Image(systemName: "checkmark.seal.fill")
             self.iconColor = .colorBackgroundSecondary

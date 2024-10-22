@@ -9,11 +9,15 @@ import SwiftUI
 
 struct TasksView: View {
     
-    @EnvironmentObject var navigationState: NavigationState
+    @ObservedObject var navigationState: NavigationState
+    
+    init(navigationState: NavigationState) {
+        self.navigationState = navigationState
+    }
     
     var models: [TaskRowViewModel] = [
         TaskRowViewModel(style: .active, displayText: "October"),
-        TaskRowViewModel(style: .completed, displayText: "Why"),
+        TaskRowViewModel(style: .complete, displayText: "Why"),
         TaskRowViewModel(style: .locked, displayText: "December")
     ]
     
@@ -23,8 +27,7 @@ struct TasksView: View {
             return
         case .active:
             self.navigationState.push(model)
-            //self.path.append(model)
-        case .completed:
+        case .complete:
             return
         }
     }
@@ -47,5 +50,5 @@ struct TasksView: View {
 }
 
 #Preview {
-    TasksView()
+    TasksView(navigationState: NavigationState())
 }

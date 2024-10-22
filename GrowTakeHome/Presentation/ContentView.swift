@@ -14,12 +14,11 @@ struct ContentView: View {
     var body: some View {
         NavigationStack(path: $navigationState.path) {
             ZStack {
-                TasksView()
+                TasksView(navigationState: navigationState)
             }
             .navigationDestination(for: TaskRowViewModel.self) { model in
                 BreatheView(viewModel: BreatheViewModel(name: model.displayText))
             }
-            .environmentObject(navigationState)
         }
     }
 }
