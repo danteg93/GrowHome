@@ -58,10 +58,7 @@ extension TaskRowViewModel: Hashable {
 extension TaskRowViewModel {
     static func from(_ taskEntity: TaskEntity, active: Bool) -> TaskRowViewModel? {
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yyyy"
-        guard let dueDateString = taskEntity.dueDate,
-           let dueDate = dateFormatter.date(from: dueDateString) else {
+        guard let dueDate = taskEntity.dueDate else {
             return nil
         }
         

@@ -9,10 +9,14 @@ import Foundation
 
 struct TaskEntity: Codable, Identifiable {
     
+    enum Constants {
+        static let dateFormat = "MM-dd-yyyy"
+    }
+    
     let id = UUID()
     let breathCount: Int?
     let moodChoices: [String]?
-    let dueDate: String?
+    let dueDate: Date?
     // TODO: Comment
     var completed: Bool = false
     var selectedMood: String?
@@ -22,7 +26,7 @@ struct TaskEntity: Codable, Identifiable {
         let container = try decoder.singleValueContainer().decode([TaskContentType].self)
         var breathCount: Int?
         var moodChoices: [String]?
-        var dueDate: String?
+        var dueDate: Date?
         
         for contentType in container {
             switch contentType {
@@ -31,7 +35,12 @@ struct TaskEntity: Codable, Identifiable {
             case .moodChoices(let array):
                 moodChoices = array
             case .dueDate(let string):
-                dueDate = string
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = Constants.dateFormat
+                if let parsedDate = dateFormatter.date(from: string) {
+                    dueDate = parsedDate
+                }
+                
             }
         }
         self.breathCount = breathCount
@@ -49,7 +58,10 @@ struct TaskEntity: Codable, Identifiable {
             try container.encode(TaskContentType.moodChoices(moodChoices))
         }
         if let dueDate = dueDate {
-            try container.encode(TaskContentType.dueDate(dueDate))
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = Constants.dateFormat
+            let dateString = dateFormatter.string(from: dueDate)
+            try container.encode(TaskContentType.dueDate(dateString))
         }
     }
 }

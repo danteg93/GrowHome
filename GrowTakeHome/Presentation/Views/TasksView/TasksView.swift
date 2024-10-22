@@ -7,31 +7,6 @@
 
 import SwiftUI
 
-class TasksViewViewModel: ObservableObject {
-    
-    private let tasksClient: any TasksClient
-    
-    @Published private(set) var models: [TaskRowViewModel] = []
-    private var initialLoad = true
-    
-    init(tasksClient: any TasksClient = TasksClientImpl()) {
-        self.tasksClient = tasksClient
-    }
-    
-    func loadTasks() {
-        do {
-            guard initialLoad else { return }
-            self.initialLoad = false
-            let tasks = try tasksClient.fetchTasks()
-            let models = tasks.tasks.compactMap { TaskRowViewModel.from($0, active: true) }
-            self.models = models
-        } catch {
-            // TODO: Fail
-        }
-        
-    }
-}
-
 struct TasksView: View {
     
     @ObservedObject var navigationState: NavigationState
