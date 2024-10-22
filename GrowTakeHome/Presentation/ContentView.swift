@@ -16,9 +16,9 @@ struct ContentView: View {
                 Text("My Tasks")
                     .font(.grow(.header700(.regular)))
                 
-                TaskRow()
-                TaskRow()
-                TaskRow()
+                TaskRow(viewModel: TaskRowViewModel(style: .active, displayText: "October"))
+                TaskRow(viewModel: TaskRowViewModel(style: .completed, displayText: "November"))
+                TaskRow(viewModel: TaskRowViewModel(style: .locked, displayText: "December"))
             }
             .padding()
             .background(.colorBackgroundPrimary).edgesIgnoringSafeArea(.all)
