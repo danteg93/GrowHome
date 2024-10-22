@@ -7,21 +7,39 @@
 
 import SwiftUI
 
+class TasksViewViewModel: ObservableObject {
+    
+    private let tasksClient: any TasksClient
+    
+    @Published private(set) var models: [TaskRowViewModel] = []
+    private var initialLoad = true
+    
+    init(tasksClient: any TasksClient = TasksClientImpl()) {
+        self.tasksClient = tasksClient
+    }
+    
+    func loadTasks() {
+        do {
+            guard initialLoad else { return }
+            self.initialLoad = false
+            let tasks = try tasksClient.fetchTasks()
+            let models = tasks.tasks.compactMap { TaskRowViewModel.from($0, active: true) }
+            self.models = models
+        } catch {
+            // TODO: Fail
+        }
+        
+    }
+}
+
 struct TasksView: View {
     
     @ObservedObject var navigationState: NavigationState
-    // Maybe move to VM
-    @State private var firstTime: Bool = true
-    
+    @StateObject var viewModel: TasksViewViewModel = TasksViewViewModel()
+
     init(navigationState: NavigationState) {
         self.navigationState = navigationState
     }
-    
-    var models: [TaskRowViewModel] = [
-        TaskRowViewModel(style: .active, displayText: "October"),
-        TaskRowViewModel(style: .complete, displayText: "Why"),
-        TaskRowViewModel(style: .locked, displayText: "December")
-    ]
     
     func didTap(model: TaskRowViewModel) {
         switch model.style {
@@ -39,9 +57,9 @@ struct TasksView: View {
             Color.colorBackgroundPrimary
                 .ignoresSafeArea()
             VStack {
-                Text("My Tasks")
+                Text(TasksLocalizedStrings.myTasks)
                     .font(.grow(.header700(.regular)))
-                List(models) { model in
+                List(viewModel.models) { model in
                     TaskRow(viewModel: model) {
                         didTap(model: model)
                     }
@@ -49,21 +67,7 @@ struct TasksView: View {
             }
         }
         .onAppear {
-            loadFile()
-        }
-    }
-    
-    // TODO: Move to VM
-    
-    func loadFile() {
-        guard firstTime else { return }
-        firstTime = false
-        if let data = try? JSONDataSource.load(fileName: "tasks.json"),
-           
-           let tasks = try? JSONDecoder().decode(TasksEntity.self, from: data) {
-            print("\(tasks.tasks.first)")
-        } else {
-            print("failure baby")
+            viewModel.loadTasks()
         }
     }
 }

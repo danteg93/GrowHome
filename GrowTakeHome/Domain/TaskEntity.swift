@@ -7,25 +7,16 @@
 
 import Foundation
 
-struct TasksEntity: Codable {
-    var tasks: [TaskEntity]
+struct TaskEntity: Codable, Identifiable {
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer().decode([TaskEntity].self)
-        self.tasks = container
-    }
-    
-    func encode(to encoder: any Encoder) throws {
-        var container = encoder.unkeyedContainer()
-        try tasks.forEach { try container.encode($0) }
-    }
-}
-
-struct TaskEntity: Codable {
-    
+    let id = UUID()
     let breathCount: Int?
     let moodChoices: [String]?
     let dueDate: String?
+    // TODO: Comment
+    var completed: Bool = false
+    var selectedMood: String?
+    var completedDate: Date?
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer().decode([TaskContentType].self)
@@ -99,4 +90,21 @@ enum TaskContentType: Codable {
     }
 }
 
+struct TasksEntity: Codable {
+    var tasks: [TaskEntity]
+    
+    init(tasks: [TaskEntity]) {
+        self.tasks = tasks
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer().decode([TaskEntity].self)
+        self.tasks = container
+    }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        try tasks.forEach { try container.encode($0) }
+    }
+}
 

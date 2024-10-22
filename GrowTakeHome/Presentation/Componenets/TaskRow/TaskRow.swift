@@ -26,54 +26,6 @@ struct TaskRowConfiguration {
     }
 }
 
-class TaskRowViewModel: ObservableObject, Identifiable {
-    enum ViewStyle {
-        case locked
-        case active
-        case complete
-    }
-    
-    @Published var style: ViewStyle
-    @Published var displayText: String
-    let displayTextColor: Color
-    let icon: Image?
-    let iconColor: Color?
-    let backgroundColor: Color
-    
-    
-    init(style: ViewStyle, displayText: String) {
-        self.style = style
-        self.displayText = displayText
-        switch style {
-        case .locked:
-            self.displayTextColor = .colorNeutralBlack
-            self.icon = Image(systemName: "lock")
-            self.iconColor = .colorNeutralGray
-            self.backgroundColor = .colorBackgroundPrimary
-        case .active:
-            self.displayTextColor = .colorNeutralBlack
-            self.icon = Image(systemName: "chevron.right")
-            self.iconColor = .colorNeutralBlack
-            self.backgroundColor = .colorNeutralGreen
-        case .complete:
-            self.displayTextColor = .colorNeutralGray
-            self.icon = Image(systemName: "checkmark.seal.fill")
-            self.iconColor = .colorBackgroundSecondary
-            self.backgroundColor = .colorBackgroundPrimary
-        }
-    }
-}
-
-extension TaskRowViewModel: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: TaskRowViewModel, rhs: TaskRowViewModel) -> Bool {
-        return lhs.id == rhs.id
-    }
-}
-
 struct TaskRow: View {
     
     let configuration: TaskRowConfiguration
