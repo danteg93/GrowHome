@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TasksView: View {
     
+    @EnvironmentObject var navigationState: NavigationState
+    
     var models: [TaskRowViewModel] = [
         TaskRowViewModel(style: .active, displayText: "October"),
         TaskRowViewModel(style: .completed, displayText: "Why"),
@@ -20,7 +22,7 @@ struct TasksView: View {
         case .locked:
             return
         case .active:
-            return
+            self.navigationState.push(model)
             //self.path.append(model)
         case .completed:
             return
