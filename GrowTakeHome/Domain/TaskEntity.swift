@@ -14,6 +14,11 @@ struct TasksEntity: Codable {
         let container = try decoder.singleValueContainer().decode([TaskEntity].self)
         self.tasks = container
     }
+    
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        try tasks.forEach { try container.encode($0) }
+    }
 }
 
 struct TaskEntity: Codable {
@@ -41,6 +46,20 @@ struct TaskEntity: Codable {
         self.breathCount = breathCount
         self.moodChoices = moodChoices
         self.dueDate = dueDate
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        
+        if let breathCount = breathCount {
+            try container.encode(TaskContentType.breathCount(breathCount))
+        }
+        if let moodChoices = moodChoices {
+            try container.encode(TaskContentType.moodChoices(moodChoices))
+        }
+        if let dueDate = dueDate {
+            try container.encode(TaskContentType.dueDate(dueDate))
+        }
     }
 }
 
