@@ -26,7 +26,7 @@ struct TaskRowConfiguration {
     }
 }
 
-class TaskRowViewModel: ObservableObject {
+class TaskRowViewModel: ObservableObject, Identifiable {
     enum ViewStyle {
         case locked
         case active
@@ -61,6 +61,16 @@ class TaskRowViewModel: ObservableObject {
             self.iconColor = .colorBackgroundSecondary
             self.backgroundColor = .colorBackgroundPrimary
         }
+    }
+}
+
+extension TaskRowViewModel: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: TaskRowViewModel, rhs: TaskRowViewModel) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 
@@ -100,6 +110,12 @@ struct TaskRow: View {
         .padding(configuration.spacingInsets)
         .background(viewModel.backgroundColor)
         .cornerRadius(configuration.cornerRadius)
+        .gesture(
+            TapGesture()
+                .onEnded({ _ in
+                    self.didTap?()
+                })
+        )
         .overlay(
             RoundedRectangle(cornerRadius: configuration.cornerRadius)
                 .stroke(configuration.borderColor, lineWidth: configuration.borderWidth)

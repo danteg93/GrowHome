@@ -8,20 +8,47 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    var models: [TaskRowViewModel] = [
+        TaskRowViewModel(style: .active, displayText: "October"),
+        TaskRowViewModel(style: .completed, displayText: "Why"),
+        TaskRowViewModel(style: .locked, displayText: "December")
+    ]
+    
+    @State private var path = NavigationPath()
+    
+    func didTap(model: TaskRowViewModel) {
+        switch model.style {
+        case .locked:
+            return
+        case .active:
+            self.path.append(model)
+        case .completed:
+            return
+        }
+    }
+    
     var body: some View {
-        ZStack {
-            Color.colorBackgroundPrimary
-                .ignoresSafeArea()
-            VStack {
-                Text("My Tasks")
-                    .font(.grow(.header700(.regular)))
-                
-                TaskRow(viewModel: TaskRowViewModel(style: .active, displayText: "October"))
-                TaskRow(viewModel: TaskRowViewModel(style: .completed, displayText: "November"))
-                TaskRow(viewModel: TaskRowViewModel(style: .locked, displayText: "December"))
+        NavigationStack(path: $path) {
+            ZStack {
+                Color.colorBackgroundPrimary
+                    .ignoresSafeArea()
+                VStack {
+                    Text("My Tasks")
+                        .font(.grow(.header700(.regular)))
+                    List(models) { model in
+                        TaskRow(viewModel: model) {
+                            didTap(model: model)
+                        }
+                    }
+                }
             }
-            .padding()
-            .background(.colorBackgroundPrimary).edgesIgnoringSafeArea(.all)
+            .navigationDestination(for: TaskRowViewModel.self) { model in
+                Text("Oh Snap \(model.displayText)")
+                    .font(.largeTitle.bold())
+                    //.navigationBarBackButtonHidden()
+            }
+            
         }
     }
 }
