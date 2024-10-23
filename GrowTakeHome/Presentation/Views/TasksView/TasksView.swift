@@ -25,7 +25,7 @@ struct TasksView: View {
     }
     
     func didTap(model: TaskRowViewModel) {
-        viewModel.determineNextView(for: model, with: navigationState)
+        viewModel.moveToNextView(for: model, with: navigationState)
     }
     
     var body: some View {

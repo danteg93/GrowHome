@@ -1,5 +1,5 @@
 //
-//  WaitingRoom.swift
+//  WaitingRoomView.swift
 //  GrowTakeHome
 //
 //  Created by Dante Garcia on 10/22/24.
@@ -7,11 +7,23 @@
 
 import SwiftUI
 
-struct WaitingRoom: View {
+struct WaitingRoomViewViewModel: Hashable {
+    let taskEntityId: UUID
+}
+
+struct WaitingRoomView: View {
     
     enum Constants {
         static let verticalSpacing: CGFloat = 16
         static let horizontalPadding: CGFloat = 16
+    }
+    
+    let viewModel: WaitingRoomViewViewModel
+    @ObservedObject var navigationState: NavigationState
+    
+    init(viewModel: WaitingRoomViewViewModel, navigationState: NavigationState) {
+        self.viewModel = viewModel
+        self.navigationState = navigationState
     }
     
     var body: some View {
@@ -32,5 +44,6 @@ struct WaitingRoom: View {
 }
 
 #Preview {
-    WaitingRoom()
+    WaitingRoomView(viewModel: WaitingRoomViewViewModel(taskEntityId: UUID()),
+                    navigationState: NavigationState())
 }

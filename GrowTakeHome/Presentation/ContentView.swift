@@ -25,6 +25,9 @@ struct ContentView: View {
             .navigationDestination(for: LiveSessionViewViewModel.self) { model in
                 LiveSessionView(viewModel: model, navigationState: navigationState)
             }
+            .navigationDestination(for: WaitingRoomViewViewModel.self) { model in
+                WaitingRoomView(viewModel: model, navigationState: navigationState)
+            }
         }
     }
 }
