@@ -14,18 +14,30 @@ class TaskRowViewModel: ObservableObject, Identifiable {
         case complete
     }
     
-    @Published var style: ViewStyle
+    @Published var style: ViewStyle {
+        didSet {
+            self.updateStyle()
+        }
+    }
     @Published var displayText: String
-    let displayTextColor: Color
-    let icon: Image?
-    let iconColor: Color?
-    let backgroundColor: Color
+    @Published var displayTextColor: Color
+    @Published var icon: Image?
+    @Published var iconColor: Color?
+    @Published var backgroundColor: Color
     
     
     init(style: ViewStyle, displayText: String) {
         self.style = style
         self.displayText = displayText
-        switch style {
+        self.displayTextColor = .colorNeutralGray
+        self.icon = Image(systemName: "lock")
+        self.iconColor = .colorNeutralGray
+        self.backgroundColor = .colorBackgroundPrimary
+        self.updateStyle()
+    }
+    
+    private func updateStyle() {
+        switch self.style {
         case .locked:
             self.displayTextColor = .colorNeutralGray
             self.icon = Image(systemName: "lock")
