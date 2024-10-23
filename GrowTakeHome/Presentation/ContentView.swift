@@ -17,7 +17,7 @@ struct ContentView: View {
                 TasksView(navigationState: navigationState)
             }
             .navigationDestination(for: TaskRowViewModel.self) { model in
-                BreatheView(viewModel: BreatheViewModel(name: model.displayText))
+                BreatheView(viewModel: BreatheViewModel(name: model.displayText, taskId: model.taskEntityId))
             }
         }
     }
