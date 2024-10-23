@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BreatheViewModel: Hashable {
+struct BreatheViewViewModel: Hashable {
     let breathCount: Int
     let taskId: UUID
     
@@ -26,7 +26,7 @@ struct BreatheView: View {
         static let circleShrinkScale: CGFloat = 0.25
     }
     
-    let viewModel: BreatheViewModel
+    let viewModel: BreatheViewViewModel
     @ObservedObject var navigationState: NavigationState
     
     @State var currentBreathCount: Int
@@ -38,7 +38,7 @@ struct BreatheView: View {
         in: .common
     ).autoconnect()
     
-    init(viewModel: BreatheViewModel,
+    init(viewModel: BreatheViewViewModel,
          navigationState: NavigationState) {
         self.viewModel = viewModel
         self.currentBreathCount = viewModel.breathCount
@@ -70,7 +70,7 @@ struct BreatheView: View {
                 Spacer()
             }
         }
-        .navigationBarBackButtonHidden(true)
+        //.navigationBarBackButtonHidden(true)
         .onAppear {
             circleScale = Constants.circleShrinkScale
         }

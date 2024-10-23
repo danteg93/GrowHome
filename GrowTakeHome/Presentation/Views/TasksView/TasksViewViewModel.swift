@@ -10,12 +10,15 @@ import Foundation
 class TasksViewViewModel: ObservableObject {
     
     private let tasksClient: any TasksClient
+    private let featureFlagClient: any FeatureFlagClient
     
     @Published private(set) var models: [TaskRowViewModel] = []
     private var initialLoad = true
     
-    init(tasksClient: any TasksClient = TasksClientImpl.shared) {
+    init(tasksClient: any TasksClient = TasksClientImpl.shared,
+         featureFlagClient: any FeatureFlagClient = FeatureFlagClientImpl.shared) {
         self.tasksClient = tasksClient
+        self.featureFlagClient = featureFlagClient
     }
     
     @MainActor
@@ -54,9 +57,14 @@ class TasksViewViewModel: ObservableObject {
         Task {
             do {
                 let taskEntity = try await tasksClient.fetchTask(id: model.taskEntityId)
-                let breatheViewModel = BreatheViewModel(breathCount: taskEntity.breathCount ?? 0,
-                                                        taskId: taskEntity.id)
-                navigationState.push(breatheViewModel)
+                if featureFlagClient.startTaskWithProviderOnline {
+                    let joinSessionViewViewModel = JoinSessionViewViewModel(taskId: taskEntity.id)
+                    navigationState.push(joinSessionViewViewModel)
+                } else {
+                    let breatheViewViewModel = BreatheViewViewModel(breathCount: taskEntity.breathCount ?? 0,
+                                                            taskId: taskEntity.id)
+                    navigationState.push(breatheViewViewModel)
+                }
             } catch {
                 return
             }

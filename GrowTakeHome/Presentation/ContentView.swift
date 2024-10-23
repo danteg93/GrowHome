@@ -16,8 +16,11 @@ struct ContentView: View {
             ZStack {
                 TasksView(navigationState: navigationState)
             }
-            .navigationDestination(for: BreatheViewModel.self) { model in
+            .navigationDestination(for: BreatheViewViewModel.self) { model in
                 BreatheView(viewModel: model, navigationState: navigationState)
+            }
+            .navigationDestination(for: JoinSessionViewViewModel.self) { model in
+                JoinSessionView(viewModel: model, navigationState: navigationState)
             }
         }
     }
