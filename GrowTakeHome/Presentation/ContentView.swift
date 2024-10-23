@@ -8,20 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject var navigationState = NavigationState()
+    
     var body: some View {
-        ZStack {
-            Color.colorBackgroundPrimary
-                .ignoresSafeArea()
-            VStack {
-                Text("My Tasks")
-                    .font(.grow(.header700(.regular)))
-                
-                TaskRow()
-                TaskRow()
-                TaskRow()
+        NavigationStack(path: $navigationState.path) {
+            ZStack {
+                TasksView(navigationState: navigationState)
             }
-            .padding()
-            .background(.colorBackgroundPrimary).edgesIgnoringSafeArea(.all)
+            .navigationDestination(for: BreatheViewViewModel.self) { model in
+                BreatheView(viewModel: model, navigationState: navigationState)
+            }
+            .navigationDestination(for: JoinSessionViewViewModel.self) { model in
+                JoinSessionView(viewModel: model, navigationState: navigationState)
+            }
+            .navigationDestination(for: LiveSessionViewViewModel.self) { model in
+                LiveSessionView(viewModel: model, navigationState: navigationState)
+            }
+            .navigationDestination(for: WaitingRoomViewViewModel.self) { model in
+                WaitingRoomView(viewModel: model, navigationState: navigationState)
+            }
+            .navigationDestination(for: SettingsViewViewModel.self) { model in
+                SettingsView(viewModel: model)
+            }
         }
     }
 }
