@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  NavigationStackView.swift
 //  GrowTakeHome
 //
 //  Created by Dante Garcia on 10/21/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct NavigationStackView: View {
     
     @StateObject var navigationState = NavigationState()
     
@@ -39,5 +39,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    NavigationStackView()
 }
