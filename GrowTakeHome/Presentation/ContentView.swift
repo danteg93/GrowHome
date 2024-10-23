@@ -31,6 +31,9 @@ struct ContentView: View {
             .navigationDestination(for: SettingsViewViewModel.self) { model in
                 SettingsView(viewModel: model)
             }
+            .navigationDestination(for: MoodSelectionViewViewModel.self) { model in
+                MoodSelectionView(viewModel: model, navigationState: navigationState)
+            }
         }
     }
 }
