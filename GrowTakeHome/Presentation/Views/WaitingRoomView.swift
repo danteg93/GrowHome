@@ -9,6 +9,17 @@ import SwiftUI
 
 struct WaitingRoomViewViewModel: Hashable {
     let taskEntityId: UUID
+    
+    init(taskEntityId: UUID) {
+        self.taskEntityId = taskEntityId
+    }
+    
+    func waitForProvider(with navigationState: NavigationState) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            let liveSessionViewViewModel = LiveSessionViewViewModel(taskEntityId: taskEntityId)
+            navigationState.push(liveSessionViewViewModel)
+        }
+    }
 }
 
 struct WaitingRoomView: View {
@@ -20,6 +31,7 @@ struct WaitingRoomView: View {
     
     let viewModel: WaitingRoomViewViewModel
     @ObservedObject var navigationState: NavigationState
+    @State var initialLoad = true
     
     init(viewModel: WaitingRoomViewViewModel, navigationState: NavigationState) {
         self.viewModel = viewModel
@@ -39,6 +51,11 @@ struct WaitingRoomView: View {
                 
             }
             .padding(.horizontal, Constants.horizontalPadding)
+        }
+        .onAppear {
+            guard initialLoad else { return }
+            initialLoad = false
+            viewModel.waitForProvider(with: navigationState)
         }
     }
 }
