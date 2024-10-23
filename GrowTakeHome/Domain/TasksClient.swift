@@ -9,19 +9,22 @@ import Foundation
 
 
 protocol TasksClient {
-    func fetchTasks() throws -> TasksEntity
+    func fetchTasks() async throws -> TasksEntity
 }
 
-class TasksClientImpl: TasksClient {
-
+actor TasksClientImpl: TasksClient {
+    
+    static let shared = TasksClientImpl()
+    private init() { }
+    
     enum TasksClientError: Error {
         case couldNotFetchTasks
     }
     
-    private var cachedTasks: [TaskEntity]?
+    private var cachedTasks: [TaskEntity] = []
     
     func fetchTasks() throws -> TasksEntity {
-        if let cachedTasks = cachedTasks {
+        if !cachedTasks.isEmpty {
             return TasksEntity(tasks: cachedTasks)
         } else {
             if let data = try? JSONDataSource.load(fileName: "tasks.json"),
@@ -31,6 +34,14 @@ class TasksClientImpl: TasksClient {
             } else {
                 throw TasksClientError.couldNotFetchTasks
             }
+        }
+    }
+    
+    func completeTask(id: UUID, completed: Bool = true) {
+        guard let index = cachedTasks.firstIndex(where: {$0.id == id}) else { return }
+        if cachedTasks.indices.contains(index) {
+            cachedTasks[index].completed = completed
+            cachedTasks[index].completedDate = Date()
         }
     }
 }

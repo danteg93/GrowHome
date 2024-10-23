@@ -76,5 +76,5 @@ struct TaskRow: View {
 }
 
 #Preview {
-    TaskRow(viewModel: TaskRowViewModel(style: .active, displayText: "November"))
+    TaskRow(viewModel: TaskRowViewModel(style: .active, displayText: "November", taskEntityId: UUID()))
 }

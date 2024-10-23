@@ -25,14 +25,16 @@ class TaskRowViewModel: ObservableObject, Identifiable {
     @Published var iconColor: Color?
     @Published var backgroundColor: Color
     
+    let taskEntityId: UUID
     
-    init(style: ViewStyle, displayText: String) {
+    init(style: ViewStyle, displayText: String, taskEntityId: UUID) {
         self.style = style
         self.displayText = displayText
         self.displayTextColor = .colorNeutralGray
         self.icon = Image(systemName: "lock")
         self.iconColor = .colorNeutralGray
         self.backgroundColor = .colorBackgroundPrimary
+        self.taskEntityId = taskEntityId
         self.updateStyle()
     }
     
@@ -100,6 +102,6 @@ extension TaskRowViewModel {
             style = .active
         }
                 
-        return TaskRowViewModel(style: style, displayText: displayText)
+        return TaskRowViewModel(style: style, displayText: displayText, taskEntityId: taskEntity.id)
     }
 }
