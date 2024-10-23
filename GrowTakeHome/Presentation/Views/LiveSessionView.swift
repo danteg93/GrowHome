@@ -8,8 +8,25 @@
 import SwiftUI
 
 struct LiveSessionView: View {
+    
+    enum Constants {
+        static let verticalSpacing: CGFloat = 16
+        static let horizontalPadding: CGFloat = 90
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.colorNeutralGreen
+                .ignoresSafeArea()
+            VStack(spacing: Constants.verticalSpacing) {
+                Text(SessionLocalizedStrings.inSession)
+                    .font(.grow(.text400(.large)))
+                    .multilineTextAlignment(.center)
+                Button(SessionLocalizedStrings.exit, action: {})
+                    .buttonStyle(CTAButtonStyleBlack())
+            }
+            .padding(.horizontal, Constants.horizontalPadding)
+        }
     }
 }
 
