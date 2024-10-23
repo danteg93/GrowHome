@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct JoinSessionViewViewModel: Hashable {
-    let taskId: UUID
+    let taskEntityId: UUID
+    
+    func navigateToNextView(with navigationState: NavigationState) {
+        let liveSessionViewViewModel = LiveSessionViewViewModel(taskEntityId: taskEntityId)
+        navigationState.push(liveSessionViewViewModel)
+    }
 }
 
 struct JoinSessionView: View {
@@ -35,7 +40,9 @@ struct JoinSessionView: View {
                 Text(SessionLocalizedStrings.providerInSession)
                     .font(.grow(.text400(.large)))
                     .multilineTextAlignment(.center)
-                Button(SessionLocalizedStrings.joinNow, action: {})
+                Button(SessionLocalizedStrings.joinNow, action: {
+                    viewModel.navigateToNextView(with: navigationState)
+                })
                     .buttonStyle(CTAButtonStyleGreen())
             }
             .padding(.horizontal, Constants.horizontalPadding)
@@ -44,5 +51,5 @@ struct JoinSessionView: View {
 }
 
 #Preview {
-    JoinSessionView(viewModel: JoinSessionViewViewModel(taskId: UUID()), navigationState: NavigationState())
+    JoinSessionView(viewModel: JoinSessionViewViewModel(taskEntityId: UUID()), navigationState: NavigationState())
 }

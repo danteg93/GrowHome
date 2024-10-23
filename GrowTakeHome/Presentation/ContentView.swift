@@ -22,6 +22,9 @@ struct ContentView: View {
             .navigationDestination(for: JoinSessionViewViewModel.self) { model in
                 JoinSessionView(viewModel: model, navigationState: navigationState)
             }
+            .navigationDestination(for: LiveSessionViewViewModel.self) { model in
+                LiveSessionView(viewModel: model, navigationState: navigationState)
+            }
         }
     }
 }

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct BreatheViewViewModel: Hashable {
     let breathCount: Int
-    let taskId: UUID
+    let taskEntityId: UUID
     
     func completeTask() async {
-        try? await TasksClientImpl.shared.completeTask(id: taskId)
+        try? await TasksClientImpl.shared.completeTask(id: taskEntityId)
     }
 }
 
@@ -84,6 +84,6 @@ struct BreatheView: View {
 }
 
 #Preview {
-    BreatheView(viewModel: .init(breathCount: 2, taskId: UUID()),
+    BreatheView(viewModel: .init(breathCount: 2, taskEntityId: UUID()),
                 navigationState: NavigationState())
 }

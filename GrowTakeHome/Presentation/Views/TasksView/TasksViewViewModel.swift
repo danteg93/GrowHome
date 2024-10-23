@@ -58,11 +58,11 @@ class TasksViewViewModel: ObservableObject {
             do {
                 let taskEntity = try await tasksClient.fetchTask(id: model.taskEntityId)
                 if featureFlagClient.startTaskWithProviderOnline {
-                    let joinSessionViewViewModel = JoinSessionViewViewModel(taskId: taskEntity.id)
+                    let joinSessionViewViewModel = JoinSessionViewViewModel(taskEntityId: taskEntity.id)
                     navigationState.push(joinSessionViewViewModel)
                 } else {
                     let breatheViewViewModel = BreatheViewViewModel(breathCount: taskEntity.breathCount ?? 0,
-                                                            taskId: taskEntity.id)
+                                                                    taskEntityId: taskEntity.id)
                     navigationState.push(breatheViewViewModel)
                 }
             } catch {

@@ -18,7 +18,7 @@ class FeatureFlagClientImpl: FeatureFlagClient {
     static let shared = FeatureFlagClientImpl()
     private init() { }
     
-    var startTaskWithProviderOnline = true
-    var providerJoinsMidExercise = false
+    var startTaskWithProviderOnline = false
+    var providerJoinsMidExercise = true
     
 }
