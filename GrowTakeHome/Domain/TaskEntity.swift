@@ -20,7 +20,6 @@ struct TaskEntity: Codable, Identifiable {
     // TODO: Comment
     var completed: Bool = false
     var selectedMood: String?
-    var completedDate: Date?
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer().decode([TaskContentType].self)

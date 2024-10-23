@@ -58,6 +58,5 @@ actor TasksClientImpl: TasksClient {
             throw TasksClientError.taskWithIdNotFound
         }
         cachedTasks[index].completed = completed
-        cachedTasks[index].completedDate = Date()
     }
 }

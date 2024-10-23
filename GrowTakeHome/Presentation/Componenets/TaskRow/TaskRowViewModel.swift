@@ -89,14 +89,7 @@ extension TaskRowViewModel {
                 textPrefix = TasksLocalizedStrings.completed
             }
             
-            var textSuffix: String
-            if let completedDate = taskEntity.completedDate {
-                textSuffix = completedDate.formattedDescription
-            } else {
-                textSuffix = dueDate.formattedDescription
-            }
-            
-            displayText = "\(textPrefix) (\(textSuffix))"
+            displayText = "\(textPrefix) (\(dueDate.formattedDescription))"
            
         } else if Date() > dueDate && active  {
             style = .active

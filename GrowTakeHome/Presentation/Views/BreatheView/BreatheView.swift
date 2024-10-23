@@ -40,5 +40,5 @@ struct BreatheView: View {
 }
 
 #Preview {
-    BreatheView(viewModel: .init(name: "WoW", taskId: UUID()))
+    BreatheView(viewModel: .init(name: "Breathe", taskId: UUID()))
 }
