@@ -25,14 +25,7 @@ struct TasksView: View {
     }
     
     func didTap(model: TaskRowViewModel) {
-        switch model.style {
-        case .locked:
-            return
-        case .active:
-            self.navigationState.push(model)
-        case .complete:
-            return
-        }
+        viewModel.determineNextView(for: model, with: navigationState)
     }
     
     var body: some View {

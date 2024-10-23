@@ -16,8 +16,8 @@ struct ContentView: View {
             ZStack {
                 TasksView(navigationState: navigationState)
             }
-            .navigationDestination(for: TaskRowViewModel.self) { model in
-                BreatheView(viewModel: BreatheViewModel(name: model.displayText, taskId: model.taskEntityId))
+            .navigationDestination(for: BreatheViewModel.self) { model in
+                BreatheView(viewModel: model, navigationState: navigationState)
             }
         }
     }

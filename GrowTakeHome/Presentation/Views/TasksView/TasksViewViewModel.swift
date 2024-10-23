@@ -45,4 +45,21 @@ class TasksViewViewModel: ObservableObject {
             }
         }
     }
+    
+    @MainActor
+    func determineNextView(for model: TaskRowViewModel, with navigationState: NavigationState) {
+        guard case .active = model.style else {
+            return
+        }
+        Task {
+            do {
+                let taskEntity = try await tasksClient.fetchTask(id: model.taskEntityId)
+                let breatheViewModel = BreatheViewModel(breathCount: taskEntity.breathCount ?? 0,
+                                                        taskId: taskEntity.id)
+                navigationState.push(breatheViewModel)
+            } catch {
+                return
+            }
+        }
+    }
 }
