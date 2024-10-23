@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+// MARK: - TaskEntity
 struct TaskEntity: Codable, Identifiable {
     
     enum Constants {
@@ -17,7 +17,7 @@ struct TaskEntity: Codable, Identifiable {
     let breathCount: Int?
     let moodChoices: [String]?
     let dueDate: Date?
-    // TODO: Comment
+    
     var completed: Bool = false
     var selectedMood: String?
     
@@ -64,7 +64,7 @@ struct TaskEntity: Codable, Identifiable {
         }
     }
 }
-
+// MARK: - TaskContentType
 enum TaskContentType: Codable {
     case breathCount(Int)
     case moodChoices([String])
@@ -72,7 +72,10 @@ enum TaskContentType: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        
+        // The JSON object is an array of unknown types. However, they don't repeat types.
+        // We go through all the values and attempt to cast them into the types we know they can be
+        // This would break if all the sudden we have two elements of the same type. However, for the scope
+        // of this project this will work.
         do {
             self = try .breathCount(container.decode(Int.self))
         } catch DecodingError.typeMismatch {
@@ -100,7 +103,7 @@ enum TaskContentType: Codable {
         }
     }
 }
-
+// MARK: - TasksEntity
 struct TasksEntity: Codable {
     var tasks: [TaskEntity]
     

@@ -7,14 +7,14 @@
 
 import Foundation
 
-
+// MARK: Client Protocol
 protocol TasksClient {
     func fetchTasks() async throws -> TasksEntity
     func fetchTask(id: UUID) async throws -> TaskEntity
     func completeTask(id: UUID, completed: Bool) async throws
     func setTaskMood(id: UUID, selectedMood: String) async throws
 }
-
+// MARK: Client Implementation
 actor TasksClientImpl: TasksClient {
     
     static let shared = TasksClientImpl()
@@ -27,6 +27,8 @@ actor TasksClientImpl: TasksClient {
     
     private var cachedTasks: [TaskEntity] = []
     
+    /// Fetches a TasksEntity from cache if available. Otherwise, it will fetch from the "tasks.json" file
+    /// - Returns: a TasksEntity containing the fetched tasks
     @discardableResult
     func fetchTasks() throws -> TasksEntity {
         if !cachedTasks.isEmpty {
@@ -42,6 +44,10 @@ actor TasksClientImpl: TasksClient {
         }
     }
     
+    /// Fetches a TasksEntity from cache if available. Otherwise, it will fetch from the "tasks.json" file, build the cache
+    /// and attempt to find the entity with the given id
+    /// - Parameters: a UUID object that helps identify the TaskEntity
+    /// - Returns: a TaskEntity matching the UUID give, if available.
     func fetchTask(id: UUID) throws -> TaskEntity {
         if cachedTasks.isEmpty {
             try self.fetchTasks()

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// TODO: Comment
+/// Wrapper around NavigationPath in order to streamline access and give pop, push and empty support.
 class NavigationState: ObservableObject {
     
     @Published var path: NavigationPath = NavigationPath()
