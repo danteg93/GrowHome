@@ -12,6 +12,7 @@ protocol TasksClient {
     func fetchTasks() async throws -> TasksEntity
     func fetchTask(id: UUID) async throws -> TaskEntity
     func completeTask(id: UUID, completed: Bool) async throws
+    func setTaskMood(id: UUID, selectedMood: String) async throws
 }
 
 actor TasksClientImpl: TasksClient {
@@ -58,5 +59,13 @@ actor TasksClientImpl: TasksClient {
             throw TasksClientError.taskWithIdNotFound
         }
         cachedTasks[index].completed = completed
+    }
+    
+    func setTaskMood(id: UUID, selectedMood: String) throws {
+        guard let index = cachedTasks.firstIndex(where: {$0.id == id}),
+              cachedTasks.indices.contains(index) else {
+            throw TasksClientError.taskWithIdNotFound
+        }
+        cachedTasks[index].selectedMood = selectedMood
     }
 }

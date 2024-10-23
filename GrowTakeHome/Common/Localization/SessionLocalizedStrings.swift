@@ -50,4 +50,18 @@ enum SessionLocalizedStrings {
         value: "Exit",
         comment: "Exit"
     )
+    
+    // MARK: - Mood Selection Strings
+    
+    static let howHaveYouBeenWeek = NSLocalizedString(
+        "Title that asks the users how they have been feeling this week",
+        value: "How have you been feeling this week?",
+        comment: "How have you been feeling this week?"
+    )
+    
+    static let logActivity = NSLocalizedString(
+        "Title for the log activity button",
+        value: "Log Activity",
+        comment: "Log Activity"
+    )
 }

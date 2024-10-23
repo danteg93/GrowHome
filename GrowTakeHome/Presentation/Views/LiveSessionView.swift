@@ -23,7 +23,8 @@ struct LiveSessionViewViewModel {
         Task {
             do {
                 try await tasksClient.completeTask(id: taskEntityId, completed: true)
-                navigationState.empty()
+                let moodSelectionViewViewModel = MoodSelectionViewViewModel(taskEntityId: taskEntityId)
+                navigationState.push(moodSelectionViewViewModel)
             } catch {
                 return
             }
