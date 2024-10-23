@@ -20,6 +20,4 @@ enum TasksLocalizedStrings {
         value: "Completed",
         comment: "Completed"
     )
-    
-    
 }

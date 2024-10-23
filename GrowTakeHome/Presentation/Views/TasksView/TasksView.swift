@@ -37,6 +37,7 @@ struct TasksView: View {
                     .frame(height: Constants.topTitleVerticalSpacing)
                 Text(TasksLocalizedStrings.myTasks)
                     .font(.grow(.header700(.regular)))
+                    .padding(.horizontal, Constants.horizontalListSpacing)
                 Spacer()
                     .frame(height: Constants.topTitleListVerticalSpacing)
                 List(viewModel.models) { model in
