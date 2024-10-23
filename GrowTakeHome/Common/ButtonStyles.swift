@@ -19,6 +19,23 @@ struct CTAButtonStyleGreen: ButtonStyle {
     }
 }
 
+struct CTAButtonStyleGreenLarge: ButtonStyle {
+    
+    var disabled: Bool
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding()
+            .frame(minWidth: 0,
+                   maxWidth: .infinity)
+            .font(.grow(.text400(.regular)))
+            .foregroundColor(disabled ? .colorLabelsTertiary : .colorActionButton)
+            .background(disabled ? .colorFillTertiary : .colorNeutralGreen)
+            .cornerRadius(12)
+            .opacity(configuration.isPressed ? 0.8 : 1)
+    }
+}
+
 struct CTAButtonStyleBlack: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

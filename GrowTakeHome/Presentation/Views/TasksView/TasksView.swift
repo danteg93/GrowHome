@@ -40,6 +40,7 @@ struct TasksView: View {
                     .frame(height: Constants.topTitleVerticalSpacing)
                 Text(TasksLocalizedStrings.myTasks)
                     .font(.grow(.header700(.regular)))
+                    .foregroundStyle(.colorNeutralBlack)
                     .padding(.horizontal, Constants.horizontalListSpacing)
                 Spacer()
                     .frame(height: Constants.topTitleListVerticalSpacing)
