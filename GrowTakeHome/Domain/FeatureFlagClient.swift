@@ -19,6 +19,6 @@ class FeatureFlagClientImpl: FeatureFlagClient {
     private init() { }
     
     var startTaskWithProviderOnline = false
-    var providerJoinsMidExercise = false
+    var providerJoinsMidExercise = true
     
 }

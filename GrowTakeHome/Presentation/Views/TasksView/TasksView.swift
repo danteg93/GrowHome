@@ -25,13 +25,16 @@ struct TasksView: View {
     }
     
     func didTap(model: TaskRowViewModel) {
-        viewModel.moveToNextView(for: model, with: navigationState)
+        viewModel.navigateToNextView(for: model, with: navigationState)
     }
     
     var body: some View {
         ZStack {
             Color.colorBackgroundPrimary
                 .ignoresSafeArea()
+            SettingsButtonView {
+                viewModel.navigateToSettings(with: navigationState)
+            }
             VStack(spacing: 0) {
                 Spacer()
                     .frame(height: Constants.topTitleVerticalSpacing)
@@ -60,6 +63,26 @@ struct TasksView: View {
         }
         .onAppear {
             viewModel.loadTasks()
+        }
+    }
+}
+
+struct SettingsButtonView: View {
+    var onTap: (() -> Void)?
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Spacer()
+                Button {
+                    onTap?()
+                } label: {
+                    Image(systemName: "gear")
+                        .foregroundColor(.colorNeutralBlack)
+                }
+                .padding(.horizontal, 32)
+            }
+            Spacer()
         }
     }
 }

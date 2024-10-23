@@ -28,6 +28,9 @@ struct ContentView: View {
             .navigationDestination(for: WaitingRoomViewViewModel.self) { model in
                 WaitingRoomView(viewModel: model, navigationState: navigationState)
             }
+            .navigationDestination(for: SettingsViewViewModel.self) { model in
+                SettingsView(viewModel: model)
+            }
         }
     }
 }

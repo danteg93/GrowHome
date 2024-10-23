@@ -50,7 +50,7 @@ class TasksViewViewModel: ObservableObject {
     }
     
     @MainActor
-    func moveToNextView(for model: TaskRowViewModel, with navigationState: NavigationState) {
+    func navigateToNextView(for model: TaskRowViewModel, with navigationState: NavigationState) {
         guard case .active = model.style else {
             return
         }
@@ -69,5 +69,10 @@ class TasksViewViewModel: ObservableObject {
                 return
             }
         }
+    }
+    
+    func navigateToSettings(with navigationState: NavigationState) {
+        let settingsViewViewModel = SettingsViewViewModel()
+        navigationState.push(settingsViewViewModel)
     }
 }

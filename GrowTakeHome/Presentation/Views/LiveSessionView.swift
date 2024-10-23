@@ -71,6 +71,7 @@ struct LiveSessionView: View {
                     .buttonStyle(CTAButtonStyleBlack())
             }
             .padding(.horizontal, Constants.horizontalPadding)
+            .navigationBarBackButtonHidden(true)
         }
     }
 }

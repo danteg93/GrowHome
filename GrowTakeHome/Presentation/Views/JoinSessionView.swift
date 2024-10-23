@@ -46,6 +46,7 @@ struct JoinSessionView: View {
                     .buttonStyle(CTAButtonStyleGreen())
             }
             .padding(.horizontal, Constants.horizontalPadding)
+            .navigationBarBackButtonHidden(true)
         }
     }
 }

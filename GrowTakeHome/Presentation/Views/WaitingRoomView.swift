@@ -57,6 +57,7 @@ struct WaitingRoomView: View {
             initialLoad = false
             viewModel.waitForProvider(with: navigationState)
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
